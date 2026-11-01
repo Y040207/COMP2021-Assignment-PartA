@@ -1,0 +1,35 @@
+# ---- .NET 编译产物 ----
+bin/
+obj/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+artifacts/
+
+# ---- 测试与覆盖率 ----
+TestResults/
+*.coverage
+*.coverlet.json
+coverage*.json
+coverage*.xml
+coverage*.info
+
+# ---- Visual Studio / VS Code ----
+.vs/
+.vscode/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# ---- 操作系统垃圾文件 ----
+.DS_Store
+Thumbs.db
+desktop.ini
+__MACOSX/
+
+# ---- 临时文件 ----
+*.tmp
+*.log
+*.bak

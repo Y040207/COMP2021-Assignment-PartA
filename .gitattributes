@@ -1,0 +1,9 @@
+# 统一换行符，避免 Windows/macOS 之间的 CRLF 警告
+* text=auto
+
+# 二进制文件不做换行转换
+*.png binary
+*.jpg binary
+*.ico binary
+*.exe binary
+*.dll binary
