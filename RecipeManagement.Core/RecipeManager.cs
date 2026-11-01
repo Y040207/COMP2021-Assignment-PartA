@@ -20,7 +20,27 @@ public sealed class RecipeManager : IRecipeManager
     public RecipeManager(IEnumerable<Recipe> recipes)
     {
         // TODO Part A: validate recipes and build Dictionary<int, Recipe>.
-        _ = recipes;
+    ArgumentNullException.ThrowIfNull(recipes);
+
+        foreach (Recipe recipe in recipes)
+        {
+            if (recipe.Id <= 0)
+            {
+                throw new ArgumentException("Recipe ID must be positive.", nameof(recipes));
+            }
+
+            if (string.IsNullOrWhiteSpace(recipe.Title))
+            {
+                throw new ArgumentException("Recipe title must not be blank.", nameof(recipes));
+            }
+
+            if (_recipes.ContainsKey(recipe.Id))
+            {
+                throw new ArgumentException($"Duplicate recipe ID: {recipe.Id}", nameof(recipes));
+            }
+
+            _recipes.Add(recipe.Id, recipe);
+        }  
     }
 
     public int RecipeCount => _recipes.Count;
@@ -32,8 +52,7 @@ public sealed class RecipeManager : IRecipeManager
     public bool AddRecipe(Recipe recipe) =>
         throw new NotImplementedException("Part A: implement AddRecipe.");
 
-    public Recipe? FindRecipe(int recipeId) =>
-        throw new NotImplementedException("Part A: implement FindRecipe.");
+    public Recipe? FindRecipe(int recipeId) => _recipes.GetValueOrDefault(recipeId);
 
     public bool RemoveRecipe(int recipeId) =>
         throw new NotImplementedException("Part A: implement RemoveRecipe.");
