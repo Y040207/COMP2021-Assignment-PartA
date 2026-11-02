@@ -49,13 +49,33 @@ public sealed class RecipeManager : IRecipeManager
     public int PendingInstructionCount => _instructionQueue.Count;
     public int RemovedRecipeCount => _removedRecipes.Count;
 
-    public bool AddRecipe(Recipe recipe) =>
-        throw new NotImplementedException("Part A: implement AddRecipe.");
+     public bool AddRecipe(Recipe recipe)
+    {
+        ArgumentNullException.ThrowIfNull(recipe);
 
+        if (recipe.Id <= 0 || string.IsNullOrWhiteSpace(recipe.Title))
+        {
+            return false;
+        }
+
+        return _recipes.TryAdd(recipe.Id, recipe);
+    }
     public Recipe? FindRecipe(int recipeId) => _recipes.GetValueOrDefault(recipeId);
 
-    public bool RemoveRecipe(int recipeId) =>
-        throw new NotImplementedException("Part A: implement RemoveRecipe.");
+     public bool RemoveRecipe(int recipeId)
+    {
+        if (!_recipes.ContainsKey(recipeId))
+        {
+            return false;
+        }
+
+        if (_cookingPlan.Find(recipeId) is not null)
+        {
+            return false;
+        }
+
+        return _recipes.Remove(recipeId);
+    }
 
     public int AddIngredientsToShoppingList(int recipeId) =>
         throw new NotImplementedException("Part A: implement AddIngredientsToShoppingList.");
