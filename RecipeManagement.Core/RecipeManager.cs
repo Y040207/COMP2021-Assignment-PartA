@@ -99,20 +99,62 @@ public sealed class RecipeManager : IRecipeManager
 
     public void ClearShoppingList() => _shoppingList.Clear();
 
-    public bool AddRecipeToCookingPlan(int recipeId) =>
-        throw new NotImplementedException("Part A: implement AddRecipeToCookingPlan.");
+    public bool AddRecipeToCookingPlan(int recipeId)
+    {
+        if (!_recipes.ContainsKey(recipeId))
+        {
+            return false;
+        }
 
-    public bool RemoveRecipeFromCookingPlan(int recipeId) =>
-        throw new NotImplementedException("Part A: implement RemoveRecipeFromCookingPlan.");
+        if (_cookingPlan.Contains(recipeId))
+        {
+            return false;
+        }
 
-    public bool RestoreLastRemovedRecipe() =>
-        throw new NotImplementedException("Part A: implement RestoreLastRemovedRecipe.");
+        _cookingPlan.AddLast(recipeId);
+        return true;
+    }
 
-    public int? PeekLastRemovedRecipe() =>
-        throw new NotImplementedException("Part A: implement PeekLastRemovedRecipe.");
+    public bool RemoveRecipeFromCookingPlan(int recipeId)
+    {
+        if (!_cookingPlan.Remove(recipeId))
+        {
+            return false;
+        }
 
-    public IReadOnlyList<int> GetCookingPlan() =>
-        throw new NotImplementedException("Part A: implement GetCookingPlan.");
+        _removedRecipes.Push(recipeId);
+        return true;
+    }
+
+    public bool RestoreLastRemovedRecipe()
+    {
+        if (_removedRecipes.Count == 0)
+        {
+            return false;
+        }
+
+        int recipeId = _removedRecipes.Pop();
+
+        if (!_recipes.ContainsKey(recipeId) || _cookingPlan.Contains(recipeId))
+        {
+            return false;
+        }
+
+        _cookingPlan.AddLast(recipeId);
+        return true;
+    }
+
+    public int? PeekLastRemovedRecipe()
+    {
+        if (_removedRecipes.Count == 0)
+        {
+            return null;
+        }
+
+        return _removedRecipes.Peek();
+    }
+
+    public IReadOnlyList<int> GetCookingPlan() => new List<int>(_cookingPlan).AsReadOnly();
 
     public bool StartCooking(int recipeId) =>
         throw new NotImplementedException("Part A: implement StartCooking.");
