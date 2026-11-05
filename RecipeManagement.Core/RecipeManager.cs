@@ -10,7 +10,6 @@ namespace RecipeManagement.Core;
 /// </summary>
 public sealed class RecipeManager : IRecipeManager
 {
-    // TODO Part A: add your private collection fields here.
     private readonly Dictionary<int, Recipe> _recipes = new();
     private readonly List<string> _shoppingList = new();
     private readonly LinkedList<int> _cookingPlan = new();
@@ -19,7 +18,6 @@ public sealed class RecipeManager : IRecipeManager
 
     public RecipeManager(IEnumerable<Recipe> recipes)
     {
-        // TODO Part A: validate recipes and build Dictionary<int, Recipe>.
         ArgumentNullException.ThrowIfNull(recipes);
 
         foreach (Recipe recipe in recipes)

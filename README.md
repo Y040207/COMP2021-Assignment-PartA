@@ -2,6 +2,18 @@
 
 Starter repository for Parts A and B. Implement `RecipeManager` in Core; the Application menu and JSON loader are supplied.
 
+## Build, test and run
+
+```
+dotnet build
+dotnet test
+dotnet run --project RecipeManagement.Application
+```
+
+Part A is complete. The test project contains 33 xUnit tests covering the five
+nominated collections, the required missing/empty cases, the cooking-plan duplicate
+case and one cross-component workflow (catalogue to plan to instruction queue and back).
+
 ## What is supplied
 
 - `RecipeManagement.Core/Models/` — recipe model classes
