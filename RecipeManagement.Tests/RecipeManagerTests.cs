@@ -39,6 +39,16 @@ public sealed class RecipeManagerTests
         Assert.Equal(new[] { 20 }, manager.GetCookingPlan());
     }
 
+ [Fact]
+    public void ClearShoppingList_EmptiesTheList()
+    {
+        var manager = CreateManager();
+
+        manager.AddIngredientsToShoppingList(10);
+        manager.ClearShoppingList();
+
+        Assert.Empty(manager.GetShoppingList());
+    }
     private static RecipeManager CreateManager()
     {
         return new RecipeManager(new[]
@@ -56,5 +66,15 @@ public sealed class RecipeManagerTests
                 Title = "Recipe B"
             }
         });
+    }
+ [Fact]
+    public void AddIngredientsToShoppingList_CopiesIngredientsInOrder()
+    {
+        var manager = CreateManager();
+
+        int added = manager.AddIngredientsToShoppingList(10);
+
+        Assert.Equal(1, added);
+        Assert.Equal(new[] { "1 apple" }, manager.GetShoppingList());
     }
 }
